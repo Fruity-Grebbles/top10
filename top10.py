@@ -15,7 +15,8 @@ except AttributeError:
 
 if __name__ == '__main__':
 
-    app = QApplication(sys.argv)
+    app = QApplication()
+    app.initUi(sys.argv)
     window = QDialog()
     window.setWindowTitle(_translate("widget", "Top Ten Tracks", None))
     ui = Ui_widget(window)
