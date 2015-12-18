@@ -16,5 +16,5 @@ def skullid():
     soup = BeautifulSoup(content)
     return soup.find("input", {"name":"fckh"})["value"]
 
-def searchskull(query):
+def search(query):
     return getmp3s("https://mp3skull.wtf/search_db.php?q="+query+"&fckh="+skullid())
