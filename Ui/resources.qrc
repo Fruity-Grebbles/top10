@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="Images">
-    <file>icon.png</file>
-    <file>cancel.png</file>
-  </qresource>
-</RCC>
