@@ -1,5 +1,5 @@
 from PyQt4 import QtCore, QtGui
-from ui_statusbar import statusbar
+from dlwidget import dlwidget
 import sys, os
 
 class Main(QtGui.QMainWindow):
@@ -8,8 +8,7 @@ class Main(QtGui.QMainWindow):
         
         self.dldir = os.path.dirname(os.path.realpath(__file__))
         
-        self.resize(500, 403)
-        self.setMinimumSize(QtCore.QSize(500, 403))
+        self.resize(550, 403)
         
         #left pane
         self.scrollLayout = QtGui.QFormLayout()
@@ -25,7 +24,7 @@ class Main(QtGui.QMainWindow):
         self.entryfield = QtGui.QLineEdit();
         self.entryfield.setPlaceholderText("Artist")
         #download button
-        self.dlbutton = QtGui.QPushButton("Download Top Ten Tracks")
+        self.dlbutton = QtGui.QPushButton("Download Top 10 Tracks")
         self.dlbutton.clicked.connect(self.adddownload)
         #add widgets to entry box
         self.entryLayout.addWidget(self.entryfield)
@@ -46,7 +45,7 @@ class Main(QtGui.QMainWindow):
         #add widgets to directory box
         self.dirLayout.addWidget(self.dirbutton)
         self.dirLayout.addWidget(self.dirfield)
-        self.dirBox = QtGui.QGroupBox("Enter an Artist")
+        self.dirBox = QtGui.QGroupBox()
         self.dirBox.setLayout(self.dirLayout)
         
         #right pane
@@ -66,7 +65,7 @@ class Main(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
         
     def adddownload(self):
-        self.scrollLayout.addRow(statusbar(self.entryfield.text()))
+        self.scrollLayout.addRow(dlwidget(self.entryfield.text()))
 
     def changedldir(self):
         olddldir = self.dldir
@@ -77,7 +76,7 @@ class Main(QtGui.QMainWindow):
 
 app = QtGui.QApplication(sys.argv)
 myWidget = Main()
-myWidget.setWindowTitle("top10")
+myWidget.setWindowTitle("Top 10")
 myWidget.show()
 myWidget.raise_()
 sys.exit(app.exec_())

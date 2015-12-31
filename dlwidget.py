@@ -1,15 +1,20 @@
 from PyQt4 import QtCore, QtGui
 
-class statusbar(QtGui.QWidget):
+class dlwidget(QtGui.QWidget):
   def __init__(self, artist, parent=None):
-        super(statusbar, self).__init__(parent)
+        super(dlwidget, self).__init__(parent)
         
         self.progressBar = QtGui.QProgressBar()
         self.track = QtGui.QLabel("Downloading TRACK (1/10)")
+        self.cancelbutton = QtGui.QPushButton("Cancel")
+        self.cancelbutton.clicked.connect(self.deleteLater)
+        
         
         self.boxLayout = QtGui.QVBoxLayout()
+        #add widgets to box
         self.boxLayout.addWidget(self.progressBar)
         self.boxLayout.addWidget(self.track)
+        self.boxLayout.addWidget(self.cancelbutton)
         self.box = QtGui.QGroupBox(artist)
         self.box.setLayout(self.boxLayout)
         
