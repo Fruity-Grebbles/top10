@@ -1,0 +1,1 @@
+from getinfo import *
