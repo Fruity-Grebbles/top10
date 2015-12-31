@@ -1,7 +1,8 @@
-from os.path import dirname, basename, isfile
-import glob
-modules = glob.glob(dirname(__file__)+"/*.py")
-getters = [ basename(f)[:-3] for f in modules if isfile(f)]
-__all__ = getters
+from sources import *
+import sources
 
+def search(query):
+	for source in sources.sources:
+		print eval(source).search(query)
 
+search("Wilco")

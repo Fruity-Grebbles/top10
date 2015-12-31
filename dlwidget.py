@@ -8,8 +8,7 @@ class dlwidget(QtGui.QWidget):
         self.progressBar = QtGui.QProgressBar()
         self.status = QtGui.QLabel("Searching...")
         self.cancelbutton = QtGui.QPushButton("Cancel")
-        self.cancelbutton.clicked.connect(self.deleteLater)
-        
+        self.cancelbutton.clicked.connect(self.cancel)
         
         self.boxLayout = QtGui.QVBoxLayout()
         #add widgets to box
@@ -22,3 +21,6 @@ class dlwidget(QtGui.QWidget):
         layout = QtGui.QHBoxLayout()
         layout.addWidget(self.box)
         self.setLayout(layout)
+	
+	def cancel(self):
+		self.deleteLater

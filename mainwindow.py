@@ -35,7 +35,7 @@ class Main(QtGui.QMainWindow):
         #directory box
         self.dirLayout = QtGui.QVBoxLayout()
         #directory button
-        self.dirbutton = QtGui.QPushButton("Download Location")
+        self.dirbutton = QtGui.QPushButton("Change")
         self.dirbutton.clicked.connect(self.changedldir)
         #directory field
         self.dirfield = QtGui.QLineEdit();
@@ -43,9 +43,9 @@ class Main(QtGui.QMainWindow):
         self.dirfield.setEnabled(False)
         self.dirfield.setText(self.dldir)
         #add widgets to directory box
-        self.dirLayout.addWidget(self.dirbutton)
         self.dirLayout.addWidget(self.dirfield)
-        self.dirBox = QtGui.QGroupBox()
+        self.dirLayout.addWidget(self.dirbutton)
+        self.dirBox = QtGui.QGroupBox("Download Location")
         self.dirBox.setLayout(self.dirLayout)
         
         #right pane
@@ -69,7 +69,7 @@ class Main(QtGui.QMainWindow):
 
     def changedldir(self):
         olddldir = self.dldir
-        self.dldir = str(QtGui.QFileDialog.getExistingDirectory(self, "Select Directory"))
+        self.dldir = str(QtGui.QFileDialog.getExistingDirectory(self, "Select Output Directory"))
         if(not self.dldir or self.dldir==""):
             self.dldir=olddldir
         self.dirfield.setText(self.dldir)
