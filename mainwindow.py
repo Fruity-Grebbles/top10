@@ -65,7 +65,8 @@ class Main(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
         
     def adddownload(self):
-        self.scrollLayout.addRow(dlwidget(self.entryfield.text()))
+        if not str(self.entryfield.text()).isspace() and not str(self.entryfield.text())=="":
+            self.scrollLayout.addRow(dlwidget(str(self.entryfield.text())))
 
     def changedldir(self):
         olddldir = self.dldir

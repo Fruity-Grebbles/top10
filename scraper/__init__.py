@@ -1,1 +1,1 @@
-from getinfo import *
+from scraper import *

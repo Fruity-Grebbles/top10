@@ -1,5 +1,5 @@
 import spotipy
-spotify = spotipy.client
+spotify = spotipy.Spotify()
 
 def getartist(artistname):
     results = spotify.search(q='artist:' + artistname, type='artist')
