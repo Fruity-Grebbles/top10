@@ -1,10 +1,13 @@
 from PyQt4 import QtCore, QtGui
 from ui_statusbar import statusbar
-import sys
+import sys, os
 
 class Main(QtGui.QMainWindow):
     def __init__(self, parent = None):
         super(Main, self).__init__(parent)
+        
+        self.dldir = os.path.dirname(os.path.realpath(__file__))
+        
         self.resize(500, 403)
         self.setMinimumSize(QtCore.QSize(500, 403))
         
@@ -39,7 +42,7 @@ class Main(QtGui.QMainWindow):
         self.dirfield = QtGui.QLineEdit();
         self.dirfield.setReadOnly(True)
         self.dirfield.setEnabled(False)
-        self.dirfield.setText("DOWNLOAD DIR")
+        self.dirfield.setText(self.dldir)
         #add widgets to directory box
         self.dirLayout.addWidget(self.dirbutton)
         self.dirLayout.addWidget(self.dirfield)
@@ -66,8 +69,12 @@ class Main(QtGui.QMainWindow):
         self.scrollLayout.addRow(statusbar(self.entryfield.text()))
 
     def changedldir(self):
-        dldir = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-        
+        olddldir = self.dldir
+        self.dldir = str(QtGui.QFileDialog.getExistingDirectory(self, "Select Directory"))
+        if(not self.dldir or self.dldir==""):
+            self.dldir=olddldir
+        self.dirfield.setText(self.dldir)
+
 app = QtGui.QApplication(sys.argv)
 myWidget = Main()
 myWidget.setWindowTitle("top10")
