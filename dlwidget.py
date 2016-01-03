@@ -6,6 +6,7 @@ from threading import Thread
 class dlwidget(QtGui.QWidget):
     def __init__(self, artistname, dldir,parent=None):
         super(dlwidget, self).__init__(parent)
+        self.terminated = False
         self.dldir = dldir
         self.artist = scraper.getartist(artistname)
         self.progressBar = QtGui.QProgressBar()
@@ -28,12 +29,11 @@ class dlwidget(QtGui.QWidget):
         self.thread.start()
         
     def cease(self):
-        self.thread.stop()
+        self.terminated=True
         self.deleteLater()
 		
     def log(self,msg):
         self.status.setText(msg)
-        print msg
         
     def bar(self,val):
         self.progressBar.setValue(val)
@@ -41,6 +41,8 @@ class dlwidget(QtGui.QWidget):
     def gettracks(self):
         tracks = scraper.toptracks(self.artist['id'])
         for track in tracks:
+            if(self.terminated):
+                break
             self.log("Downloading "+track['name'])
             urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
