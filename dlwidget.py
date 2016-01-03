@@ -4,8 +4,9 @@ import downloader
 from threading import Thread
 
 class dlwidget(QtGui.QWidget):
-    def __init__(self, artistname, parent=None):
+    def __init__(self, artistname, dldir,parent=None):
         super(dlwidget, self).__init__(parent)
+        self.dldir = dldir
         self.artist = scraper.getartist(artistname)
         self.progressBar = QtGui.QProgressBar()
         self.status = QtGui.QLabel("Loading...")
@@ -27,7 +28,8 @@ class dlwidget(QtGui.QWidget):
         self.thread.start()
         
     def cease(self):
-		self.deleteLater()
+        self.thread.stop()
+        self.deleteLater()
 		
     def log(self,msg):
         self.status.setText(msg)
@@ -40,10 +42,10 @@ class dlwidget(QtGui.QWidget):
         tracks = scraper.toptracks(self.artist['id'])
         for track in tracks:
             self.log("Downloading "+track['name'])
-            urls = downloader.search(track['name'])
+            urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
                 try:
-                    downloader.download(url,self.bar)
+                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name'])
                     break
                 except Exception:
                     pass

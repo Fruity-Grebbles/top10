@@ -8,8 +8,7 @@ def search(query):
         urls.extend(eval(source).search(query))
     return urls
     
-def download(url,logfunc):
-    file_name = url.split('/')[-1]
+def download(url,logfunc,file_name):
     u = urllib2.urlopen(url)
     f = open(file_name, 'wb')
     meta = u.info()
@@ -25,4 +24,5 @@ def download(url,logfunc):
         f.write(buffer)
         percent = file_size_dl * 100. / file_size
         logfunc(percent)
+    logfunc(0)
     f.close()
