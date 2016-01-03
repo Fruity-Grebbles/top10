@@ -13,8 +13,6 @@ def download(url,logfunc):
     f = open(file_name, 'wb')
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
-    print "Downloading: %s Bytes: %s" % (file_name, file_size)
-
     file_size_dl = 0
     block_sz = 8192
     while True:

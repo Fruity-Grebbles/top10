@@ -1,6 +1,7 @@
 from PyQt4 import QtCore, QtGui
 import scraper
 import downloader
+import threading import Thread
 
 class dlwidget(QtGui.QWidget):
     def __init__(self, artistname, parent=None):
@@ -12,7 +13,6 @@ class dlwidget(QtGui.QWidget):
         self.cancelbutton.clicked.connect(self.cancel)
         
         self.boxLayout = QtGui.QVBoxLayout()
-        #add widgets to box
         self.boxLayout.addWidget(self.progressBar)
         self.boxLayout.addWidget(self.status)
         self.boxLayout.addWidget(self.cancelbutton)
@@ -22,9 +22,12 @@ class dlwidget(QtGui.QWidget):
         layout = QtGui.QHBoxLayout()
         layout.addWidget(self.box)
         self.setLayout(layout)
-	
+        scraper.get
+        
     def cancel(self):
 		self.deleteLater()
 		
     def log(self,msg):
 		self.status.setText(msg)
+
+
