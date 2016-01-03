@@ -3,6 +3,7 @@ import sources
 import urllib2
 
 def search(query):
+    urls = []
     for source in sources.sources:
         urls.extend(eval(source).search(query))
     return urls
