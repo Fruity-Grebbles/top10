@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 import scraper
+import downloader
 
 class dlwidget(QtGui.QWidget):
     def __init__(self, artistname, parent=None):

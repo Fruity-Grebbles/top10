@@ -1,1 +1,1 @@
-Any new module in this folder will be added to the pool of download sources that top10 uses to gather music. The module must have a "search" function that takes a query as an argument returns a list of URLs
+Any new module in this folder will be added to the pool of download sources that top10 uses to gather music. The module must have a "search" function that takes a query as an argument returns a list of URLs.
