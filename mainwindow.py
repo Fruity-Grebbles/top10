@@ -75,6 +75,7 @@ class Main(QtGui.QMainWindow):
             self.dldir=olddldir
         self.dirfield.setText(self.dldir)
 
+QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_X11InitThreads)
 app = QtGui.QApplication(sys.argv)
 myWidget = Main()
 myWidget.setWindowTitle("Top 10")

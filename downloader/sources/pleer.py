@@ -8,7 +8,11 @@ def search(query):
 
     params = {'query': query}
     links = []
-    for track in pleer.tracks_search(params=params)['tracks'].itervalues():
-		links.append(pleer.tracks_get_download_link(track['id'])['url'])
-		
-    return links
+    try:
+        for track in pleer.tracks_search(params=params)['tracks'].itervalues():
+            links.append(pleer.tracks_get_download_link(track['id'])['url'])
+        return links
+    except Exception:
+        for track in pleer.tracks_search(params=params)['tracks']:
+            links.append(pleer.tracks_get_download_link(track['id'])['url'])
+        return links
