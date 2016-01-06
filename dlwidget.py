@@ -47,7 +47,7 @@ class dlwidget(QtGui.QWidget):
             urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
                 try:
-                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name'])
+                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
                     break
                 except Exception:
                     pass
