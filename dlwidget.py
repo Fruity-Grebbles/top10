@@ -1,7 +1,7 @@
 from PyQt4 import QtCore, QtGui
 import scraper
 import downloader
-from PyQt4.QtCore import QThread
+from threading import Thread
 
 class dlwidget(QtGui.QWidget):
     def __init__(self, artistname, dldir,parent=None):
@@ -25,7 +25,7 @@ class dlwidget(QtGui.QWidget):
         layout.addWidget(self.box)
         self.setLayout(layout)
         
-        self.thread = gettracks(self.artist,self.log,self.cease,self.bar)
+        self.thread = Thread(target=self.gettracks)
         self.thread.start()
         
     def cease(self):
@@ -38,29 +38,15 @@ class dlwidget(QtGui.QWidget):
     def bar(self,val):
         self.progressBar.setValue(val)
     
-
-
-class gettracks(QThread):
-    
-    def __init__(self,artist,log,cease,bar):
-        QThread.__init__(self)
-        self.artist = artist
-        self.log = log
-        self.cease = cease
-        self.bar = bar
-        
-    def __del__(self):
-        self.wait()
-
-    def run(self):
+    def gettracks():
         tracks = scraper.toptracks(self.artist['id'])
-        for track in tracks:
-            self.log("Downloading "+track['name'])
-            urls = downloader.search(track['name']+" "+self.artist['name'])
-            for url in urls:
-                try:
-                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
-                    break
-                except Exception:
-                    pass
+            for track in tracks:
+                self.log("Downloading "+track['name'])
+                urls = downloader.search(track['name']+" "+self.artist['name'])
+                for url in urls:
+                    try:
+                        downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
+                        break
+                    except Exception:
+                        raise Exception
         self.cease()
