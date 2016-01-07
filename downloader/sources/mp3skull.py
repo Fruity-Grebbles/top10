@@ -1,11 +1,17 @@
 from bs4 import BeautifulSoup
-import urllib2, re
+import urllib2, re, urlparse
+import string
 
 opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 
 def getmp3s(url):
-    response = opener.open(url)
+    
+    try:
+        response = opener.open(url)
+    except UnicodeEncodeError:
+        response = opener.open(iriToUri(url))
+        
     content = response.read()
     soup = BeautifulSoup(content,"lxml")
     results = []
@@ -21,3 +27,13 @@ def skullid():
 
 def search(query):
     return getmp3s("https://mp3skull.wtf/search_db.php?q="+query+"&fckh="+skullid())
+    
+def urlEncodeNonAscii(b):
+    return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
+
+def iriToUri(iri):
+    parts= urlparse.urlparse(iri)
+    return urlparse.urlunparse(
+        part.encode('idna') if parti==1 else urlEncodeNonAscii(part.encode('utf-8'))
+        for parti, part in enumerate(parts)
+    )

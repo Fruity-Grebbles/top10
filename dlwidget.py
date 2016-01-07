@@ -38,15 +38,16 @@ class dlwidget(QtGui.QWidget):
     def bar(self,val):
         self.progressBar.setValue(val)
     
-    def gettracks():
+    def gettracks(self):
         tracks = scraper.toptracks(self.artist['id'])
-            for track in tracks:
-                self.log("Downloading "+track['name'])
-                urls = downloader.search(track['name']+" "+self.artist['name'])
-                for url in urls:
-                    try:
-                        downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
-                        break
-                    except Exception:
-                        raise Exception
+        for track in tracks:
+            self.log("Downloading "+track['name'])
+            urls = downloader.search(track['name']+" "+self.artist['name'])
+            for url in urls:
+                try:
+                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
+                    break
+                except Exception:
+                    raise Exception
+                    pass
         self.cease()
