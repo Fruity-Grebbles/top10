@@ -46,6 +46,8 @@ class dlwidget(QtGui.QWidget):
         tracks = scraper.toptracks(self.artist['id'])
         self.cancelbutton.setEnabled(True)
         for track in tracks:
+            if(self.terminated):
+                break
             self.log("Downloading "+track['name'])
             urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
@@ -56,5 +58,4 @@ class dlwidget(QtGui.QWidget):
                     break
                 except Exception:
                     raise Exception
-            break
         self.deleteLater()
