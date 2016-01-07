@@ -4,21 +4,22 @@ import downloader
 from threading import Thread
 
 class dlwidget(QtGui.QWidget):
+    
     def __init__(self, artistname, dldir,parent=None):
         super(dlwidget, self).__init__(parent)
+        self.artist = artistname
         self.terminated = False
         self.dldir = dldir
-        self.artist = scraper.getartist(artistname)
         self.progressBar = QtGui.QProgressBar()
         self.status = QtGui.QLabel("Loading...")
         self.cancelbutton = QtGui.QPushButton("Cancel")
-        self.cancelbutton.clicked.connect(self.cease)
-        
+        self.cancelbutton.clicked.connect(self.halt)
+        self.cancelbutton.setEnabled(False)
         self.boxLayout = QtGui.QVBoxLayout()
         self.boxLayout.addWidget(self.progressBar)
         self.boxLayout.addWidget(self.status)
         self.boxLayout.addWidget(self.cancelbutton)
-        self.box = QtGui.QGroupBox(self.artist['name'])
+        self.box = QtGui.QGroupBox("\""+self.artist+"\"")
         self.box.setLayout(self.boxLayout)
         
         layout = QtGui.QHBoxLayout()
@@ -27,10 +28,6 @@ class dlwidget(QtGui.QWidget):
         
         self.thread = Thread(target=self.gettracks)
         self.thread.start()
-        
-    def cease(self):
-        self.terminated=True
-        self.deleteLater()
 		
     def log(self,msg):
         self.status.setText(msg)
@@ -38,16 +35,26 @@ class dlwidget(QtGui.QWidget):
     def bar(self,val):
         self.progressBar.setValue(val)
     
+    def halt(self):
+        self.log("Stopping...")
+        self.terminated = True
+        
+    
     def gettracks(self):
+        self.artist = scraper.getartist(self.artist)
+        self.box.setTitle(self.artist['name'])
         tracks = scraper.toptracks(self.artist['id'])
+        self.cancelbutton.setEnabled(True)
         for track in tracks:
             self.log("Downloading "+track['name'])
             urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
+                if(self.terminated):
+                    break
                 try:
                     downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
                     break
                 except Exception:
                     raise Exception
-                    pass
-        self.cease()
+            break
+        self.deleteLater()
