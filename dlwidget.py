@@ -1,7 +1,6 @@
 from PyQt4 import QtCore, QtGui
 import scraper
 import downloader
-from PyQt4.QtCore import SIGNAL, QThread
 
 class dlwidget(QtGui.QWidget):
     
@@ -23,12 +22,12 @@ class dlwidget(QtGui.QWidget):
         self.setLayout(layout)
         
         self.thread = Thread(artist,dldir)
-        self.connect(self.thread, SIGNAL('log(QString)'),self.log)
-        self.connect(self.thread, SIGNAL('bar(int)'),self.bar)
-        self.connect(self.thread, SIGNAL('setbox(QString)'),self.setbox)
-        self.connect(self.thread, SIGNAL('setcancelbutton(bool)'),self.setcancelbutton)
-        self.connect(self.thread, SIGNAL("finished()"), self.deleteLater)
-        self.connect(self.thread, SIGNAL("terminated()"), self.deleteLater)
+        self.connect(self.thread, QtCore.SIGNAL('log(QString)'),self.log)
+        self.connect(self.thread, QtCore.SIGNAL('bar(int)'),self.bar)
+        self.connect(self.thread, QtCore.SIGNAL('setbox(QString)'),self.setbox)
+        self.connect(self.thread, QtCore.SIGNAL('setcancelbutton(bool)'),self.setcancelbutton)
+        self.connect(self.thread, QtCore.SIGNAL("finished()"), self.deleteLater)
+        self.connect(self.thread, QtCore.SIGNAL("terminated()"), self.deleteLater)
         
         self.cancelbutton.clicked.connect(self.thread.terminate)
         
@@ -44,10 +43,10 @@ class dlwidget(QtGui.QWidget):
         self.cancelbutton.setEnabled(val)
         
 
-class Thread(QThread):
+class Thread(QtCore.QThread):
     
     def __init__(self,artist,dldir):
-        QThread.__init__(self)
+        QtCore.QThread.__init__(self)
         self.artist = artist
         self.dldir = dldir
     def __del__(self):
@@ -70,10 +69,10 @@ class Thread(QThread):
                 
                     
     def log(self,msg):
-        self.emit(SIGNAL('log(QString)'), msg)
+        self.emit(QtCore.SIGNAL('log(QString)'), msg)
     def bar(self,val):
-        self.emit(SIGNAL('bar(int)'), val)
+        self.emit(QtCore.SIGNAL('bar(int)'), val)
     def setbox(self,title):
-        self.emit(SIGNAL('setbox(QString)'), title)
+        self.emit(QtCore.SIGNAL('setbox(QString)'), title)
     def setcancelbutton(self,val):
-        self.emit(SIGNAL('setcancelbutton(bool)'), val)
+        self.emit(QtCore.SIGNAL('setcancelbutton(bool)'), val)
