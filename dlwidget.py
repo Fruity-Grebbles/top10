@@ -38,7 +38,6 @@ class dlwidget(QtGui.QWidget):
         self.status.setText(msg)
     def bar(self,val):
         self.progressBar.setValue(val)
-        print "Main bar"
     def setbox(self,title):
         self.box.setTitle(title)
     def setcancelbutton(self,val):
@@ -63,7 +62,10 @@ class Thread(QThread):
             self.log("Downloading "+track['name'])
             urls = downloader.search(track['name']+" "+self.artist['name'])
             for url in urls:
-                downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
+                try:
+                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
+                except Exception:
+                    pass
                 break
                 
                     
@@ -71,7 +73,6 @@ class Thread(QThread):
         self.emit(SIGNAL('log(QString)'), msg)
     def bar(self,val):
         self.emit(SIGNAL('bar(int)'), val)
-        print "Thread bar!"
     def setbox(self,title):
         self.emit(SIGNAL('setbox(QString)'), title)
     def setcancelbutton(self,val):
