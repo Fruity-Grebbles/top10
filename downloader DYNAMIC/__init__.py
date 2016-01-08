@@ -1,10 +1,11 @@
-import mp3skull,pleer
+from sources import *
+import sources
 import urllib2
 
 def search(query):
     urls = []
-    urls.extend(mp3skull.search(query))
-    urls.extend(pleer.search(query))
+    for source in sources.sources:
+        urls.extend(eval(source).search(query))
     return urls
     
 def download(url,logfunc,file_name):
