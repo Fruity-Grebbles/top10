@@ -26,6 +26,7 @@ class Main(QtGui.QMainWindow):
         #download button
         self.dlbutton = QtGui.QPushButton("Download Top 10 Tracks")
         self.dlbutton.clicked.connect(self.adddownload)
+        self.dlbutton.clicked.connect(self.clearentryfield)
         #add widgets to entry box
         self.entryLayout.addWidget(self.entryfield)
         self.entryLayout.addWidget(self.dlbutton)
@@ -75,6 +76,9 @@ class Main(QtGui.QMainWindow):
             self.dldir=olddldir
         self.dirfield.setText(self.dldir)
 
+    def clearentryfield(self):
+        self.entryfield.setText("")
+        
 QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_X11InitThreads)
 app = QtGui.QApplication(sys.argv)
 myWidget = Main()
