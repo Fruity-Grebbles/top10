@@ -54,8 +54,8 @@ class Thread(QtCore.QThread):
     
     def run(self):
         self.artist = scraper.getartist(self.artist)
-        self.setbox(self.artist.name)
         tracks = scraper.toptracks(self.artist)
+        self.setbox(str(tracks[0].item).split(" - ")[0])
         self.setcancelbutton(True)
         for track in tracks:
             self.log("Downloading "+str(track.item))
