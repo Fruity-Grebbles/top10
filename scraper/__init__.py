@@ -1,12 +1,11 @@
-import spotipy
-spotify = spotipy.Spotify()
+import pylast
+API_KEY = '71e7585c4ca3cb8c0e160246bfee4385'
+API_SECRET = 'a90f951842bad467949b613490ccbe6f'
+
+network = pylast.LastFMNetwork(API_KEY, api_secret = API_SECRET)
 
 def getartist(artistname):
-    results = spotify.search(q='artist:' + artistname, type='artist')
-    items = results['artists']['items']
-    if len(items) > 0:
-        artist = items[0]
-        return artist
+    return network.get_artist(artistname)
         
-def toptracks(artistid):
-    return spotify.artist_top_tracks(artistid)['tracks']
+def toptracks(artist):
+    return artist.get_top_tracks()

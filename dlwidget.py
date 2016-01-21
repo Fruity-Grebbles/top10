@@ -54,19 +54,18 @@ class Thread(QtCore.QThread):
     
     def run(self):
         self.artist = scraper.getartist(self.artist)
-        self.setbox(self.artist['name'])
-        tracks = scraper.toptracks(self.artist['id'])
+        self.setbox(self.artist.name)
+        tracks = scraper.toptracks(self.artist)
         self.setcancelbutton(True)
         for track in tracks:
-            self.log("Downloading "+track['name'])
-            urls = downloader.search(track['name']+" "+self.artist['name'])
+            self.log("Downloading "+str(track.item))
+            urls = downloader.search(str(track.item))
             for url in urls:
                 try:
-                    downloader.download(url,self.bar,self.dldir+"/"+self.artist['name']+" - "+track['name']+".mp3")
+                    downloader.download(url,self.bar,self.dldir+"/"+str(track.item)+".mp3")
                 except Exception:
                     pass
                 break
-                
                     
     def log(self,msg):
         self.emit(QtCore.SIGNAL('log(QString)'), msg)
