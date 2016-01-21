@@ -1,10 +1,11 @@
-import mp3skull,pleer
+import mp3skull,pleer,emp3world
 import urllib2
 
 def search(query):
     urls = []
     urls.extend(mp3skull.search(query))
     urls.extend(pleer.search(query))
+    urls.extend(emp3world.search(query))
     return urls
     
 def download(url,logfunc,file_name):

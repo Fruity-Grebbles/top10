@@ -5,12 +5,15 @@ import string
 opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 
+def search(query):
+    query= re.sub(r"\s+", '_', query)
+    return getmp3s("http://emp3world.biz/search/"+query+"_mp3_download.html")
+
 def getmp3s(url):
     try:
         response = opener.open(url)
     except UnicodeEncodeError:
         response = opener.open(iriToUri(url))
-        
     content = response.read()
     soup = BeautifulSoup(content,"lxml")
     results = []
@@ -18,16 +21,6 @@ def getmp3s(url):
         results.append(a['href'])
     return results
 
-def skullid():
-    response = opener.open("http://mp3skull.wtf/")
-    content = response.read()
-    soup = BeautifulSoup(content,"lxml")
-    return soup.find("input", {"name":"fckh"})["value"]
-
-def search(query):
-    query= re.sub(r"\s+", '_', query)
-    return getmp3s("https://mp3skull.wtf/search_db.php?q="+query+"&fckh="+skullid())
-    
 def urlEncodeNonAscii(b):
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
 
