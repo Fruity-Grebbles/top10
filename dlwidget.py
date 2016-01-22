@@ -57,15 +57,19 @@ class Thread(QtCore.QThread):
         tracks = scraper.toptracks(self.artist)
         self.setbox(str(tracks[0].item).split(" - ")[0])
         self.setcancelbutton(True)
+        dlded=0
         for track in tracks:
             self.log("Downloading "+str(track.item))
             urls = downloader.search(str(track.item))
+            if(dlded=10):
+                break
             for url in urls:
                 try:
                     downloader.download(url,self.bar,self.dldir+"/"+str(track.item)+".mp3")
+                    dlded+=1
+                    break
                 except Exception:
                     pass
-                break
                     
     def log(self,msg):
         self.emit(QtCore.SIGNAL('log(QString)'), msg)
