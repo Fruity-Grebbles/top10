@@ -61,7 +61,7 @@ class Thread(QtCore.QThread):
         for track in tracks:
             self.log("Downloading "+str(track.item))
             urls = downloader.search(str(track.item))
-            if(dlded=10):
+            if(dlded==10):
                 break
             for url in urls:
                 try:
