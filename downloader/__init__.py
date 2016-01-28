@@ -1,5 +1,6 @@
 import mp3skull,pleer,emp3world
 import urllib2
+import os
 
 def search(query):
     urls = []
@@ -15,14 +16,18 @@ def download(url,logfunc,file_name):
     file_size = int(meta.getheaders("Content-Length")[0])
     file_size_dl = 0
     block_sz = 8192
-    while True:
-        buffer = u.read(block_sz)
-        if not buffer:
-            break
+    try:
+        while True:
+            buffer = u.read(block_sz)
+            if not buffer:
+                break
 
-        file_size_dl += len(buffer)
-        f.write(buffer)
-        percent = file_size_dl * 100. / file_size
-        logfunc(percent)
+            file_size_dl += len(buffer)
+            f.write(buffer)
+            percent = file_size_dl * 100. / file_size
+            logfunc(percent)
+        f.close()
+    except Exception:
+        os.remove(f)
+        raise
     logfunc(0)
-    f.close()
