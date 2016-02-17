@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
-import urllib2, re, urlparse
+import re, urlparse
 import string
+import openurl
 
-opener = urllib2.build_opener()
-opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+opener = openurl.opener()
 
 def getmp3s(url):
     try:
