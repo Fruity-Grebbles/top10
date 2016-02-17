@@ -1,7 +1,8 @@
 import mp3skull,pleer,emp3world
-import urllib2
 import os
+import openurl
 
+opener = openurl.opener()
 def search(query):
     urls = []
     urls.extend(mp3skull.search(query))
@@ -10,7 +11,7 @@ def search(query):
     return urls
     
 def download(url,logfunc,file_name):
-    u = urllib2.urlopen(url)
+    u = opener.open(url)
     f = open(file_name, 'wb')
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
