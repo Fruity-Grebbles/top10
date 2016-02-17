@@ -1,12 +1,14 @@
 from PyQt4 import QtCore, QtGui
 from dlwidget import dlwidget
 import sys, os
+from os.path import expanduser
+home = expanduser("~")
 
 class Main(QtGui.QMainWindow):
     def __init__(self, parent = None):
         super(Main, self).__init__(parent)
         
-        self.dldir = os.path.dirname(os.path.realpath(__file__))
+        self.dldir = home
         
         self.resize(550, 403)
         
