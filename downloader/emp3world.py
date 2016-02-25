@@ -1,9 +1,10 @@
 from bs4 import BeautifulSoup
-import urllib2, re, urlparse
+import re, urlparse
 import string
-import openurl
+import openurl,urllib
 
-opener = openurl.opener()
+urllib._urlopener = openurl.opener()
+
 
 def search(query):
     query= re.sub(r"\s+", '_', query)
@@ -11,9 +12,9 @@ def search(query):
 
 def getmp3s(url):
     try:
-        response = opener.open(url)
+        response = urllib.urlopen(url)
     except UnicodeEncodeError:
-        response = opener.open(iriToUri(url))
+        response = urllib.urlopen(iriToUri(url))
     content = response.read()
     soup = BeautifulSoup(content,"lxml")
     results = []

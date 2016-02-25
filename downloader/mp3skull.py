@@ -1,15 +1,15 @@
 from bs4 import BeautifulSoup
 import re, urlparse
 import string
-import openurl
+import openurl, urllib
+urllib._urlopener = openurl.opener()
 
-opener = openurl.opener()
 
 def getmp3s(url):
     try:
-        response = opener.open(url)
+        response = urllib.urlopen(url)
     except UnicodeEncodeError:
-        response = opener.open(iriToUri(url))
+        response = urllib.urlopen(iriToUri(url))
         
     content = response.read()
     soup = BeautifulSoup(content,"lxml")
@@ -19,14 +19,14 @@ def getmp3s(url):
     return results
 
 def skullid():
-    response = opener.open("http://mp3skull.wtf/")
+    response = urllib.urlopen("http://mp3skull.yoga/")
     content = response.read()
     soup = BeautifulSoup(content,"lxml")
     return soup.find("input", {"name":"fckh"})["value"]
 
 def search(query):
     query= re.sub(r"\s+", '_', query)
-    return getmp3s("https://mp3skull.wtf/search_db.php?q="+query+"&fckh="+skullid())
+    return getmp3s("https://mp3skull.yoga/search_db.php?q="+query+"&fckh="+skullid())
     
 def urlEncodeNonAscii(b):
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)

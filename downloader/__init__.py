@@ -1,34 +1,29 @@
 import mp3skull,pleer,emp3world
+import openurl,urllib
 import os
-import openurl
 
-opener = openurl.opener()
+urllib._urlopener = openurl.opener()
+
 def search(query):
     urls = []
     urls.extend(mp3skull.search(query))
     urls.extend(pleer.search(query))
     urls.extend(emp3world.search(query))
     return urls
-    
-def download(url,logfunc,file_name):
-    u = opener.open(url)
-    f = open(file_name, 'wb')
-    meta = u.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
-    file_size_dl = 0
-    block_sz = 8192
-    try:
-        while True:
-            buffer = u.read(block_sz)
-            if not buffer:
-                break
 
-            file_size_dl += len(buffer)
-            f.write(buffer)
-            percent = file_size_dl * 100. / file_size
-            logfunc(percent)
-        f.close()
-    except Exception:
-        os.remove(f)
-        raise
-    logfunc(0)
+def download(url,logfunc,outfile):
+	f = open(outfile,"wb+")
+	site = urllib.urlopen(url)
+	meta = site.info()
+	filesize = meta.getheaders("Content-Length")[0]
+	while True:
+		block = f.read(4096) # read a 4k block from the file
+		if len(block) == 0:
+			break
+		f.write(block)
+		logfunc(str(os.stat(filename).st_size/filesize*100))
+
+def sprint(x):
+	print x
+
+download("http://mp3light.net/assets/songs/39000-39999/39381-take-on-me-a-ha--1411576443.mp3",sprint,"this.mp3")

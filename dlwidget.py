@@ -72,8 +72,9 @@ class Thread(QtCore.QThread):
                     
     def log(self,msg):
         self.emit(QtCore.SIGNAL('log(QString)'), msg)
-    def bar(self,val):
-        self.emit(QtCore.SIGNAL('bar(int)'), val)
+    def bar(self,count,blockSize,totalSize):
+        percent = int(count*blockSize*100/totalSize)
+        self.emit(QtCore.SIGNAL('bar(int)'), percent)
     def setbox(self,title):
         self.emit(QtCore.SIGNAL('setbox(QString)'), title)
     def setcancelbutton(self,val):
