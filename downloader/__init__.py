@@ -22,8 +22,8 @@ def download(url,logfunc,outfile):
 			break
 		f.write(block)
 		logfunc(str(os.stat(filename).st_size/filesize*100))
-
+	f.close()
 def sprint(x):
 	print x
 
-download("http://mp3light.net/assets/songs/39000-39999/39381-take-on-me-a-ha--1411576443.mp3",sprint,"this.mp3")
+download("http://musicjustfor.me/assets/songs/39000-39999/39381-take-on-me-a-ha--1411576443.mp3?dl=1",sprint,"this.mp3")
