@@ -60,16 +60,21 @@ class Thread(QtCore.QThread):
         dlded=0
         for track in tracks:
             if(dlded!=10):
+                success = False
                 self.log("Downloading "+str(track.item))
-                urls = downloader.search(str(track.item))
-                for url in urls:
-                    try:
-                        print url
-                        downloader.download(url,self.bar,self.dldir+"/"+str(track.item)+".mp3")
-                        dlded+=1
+                for engine in downloader.search:
+                    if(success):
                         break
-                    except Exception:
-						pass
+                    urls = engine.search(str(track.item))
+                    print urls
+                    for url in urls:
+                        try:
+                            downloader.download(url,self.bar,self.dldir+"/"+str(track.item)+".mp3")
+                            success = True
+                            dlded+=1
+                            break
+                        except Exception:
+                            pass
 						                    
     def log(self,msg):
         self.emit(QtCore.SIGNAL('log(QString)'), msg)

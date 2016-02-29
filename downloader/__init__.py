@@ -4,12 +4,7 @@ import os
 
 urllib._urlopener = openurl.opener()
 
-def search(query):
-    urls = []
-    urls.extend(mp3skull.search(query))
-    urls.extend(pleer.search(query))
-    urls.extend(emp3world.search(query))
-    return urls
+search = [mp3skull,pleer,emp3world]
 
 def download(url,logfunc,outfile):
 	print url
@@ -25,3 +20,4 @@ def download(url,logfunc,outfile):
 		f.write(block)
 		logfunc(os.stat(outfile).st_size/filesize*100)
 	f.close()
+	logfunc(0)

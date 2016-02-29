@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import re, urlparse
 import string
 import openurl,urllib
-
 urllib._urlopener = openurl.opener()
 
 

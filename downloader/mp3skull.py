@@ -26,7 +26,7 @@ def skullid():
 
 def search(query):
     query= re.sub(r"\s+", '_', query)
-    return getmp3s("https://mp3skull.yoga/search_db.php?q="+query+"&fckh="+skullid())
+    return getmp3s("https://mp3skull.mn/search_db.php?q="+query+"&fckh="+skullid())
     
 def urlEncodeNonAscii(b):
     return re.sub('[\x80-\xFF]', lambda c: '%%%02x' % ord(c.group(0)), b)
