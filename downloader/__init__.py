@@ -12,6 +12,7 @@ def search(query):
     return urls
 
 def download(url,logfunc,outfile):
+	print url
 	f = open(outfile,"wb+")
 	site = urllib.urlopen(url)
 	meta = site.info()
@@ -22,5 +23,5 @@ def download(url,logfunc,outfile):
 		if len(block) == 0:
 			break
 		f.write(block)
-		logfunc(str(os.stat(outfile).st_size/filesize*100))
+		logfunc(os.stat(outfile).st_size/filesize*100)
 	f.close()

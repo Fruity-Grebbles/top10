@@ -64,16 +64,16 @@ class Thread(QtCore.QThread):
                 urls = downloader.search(str(track.item))
                 for url in urls:
                     try:
+                        print url
                         downloader.download(url,self.bar,self.dldir+"/"+str(track.item)+".mp3")
                         dlded+=1
                         break
                     except Exception:
-                        pass
-                    
+						pass
+						                    
     def log(self,msg):
         self.emit(QtCore.SIGNAL('log(QString)'), msg)
-    def bar(self,count,blockSize,totalSize):
-        percent = int(count*blockSize*100/totalSize)
+    def bar(self,percent):
         self.emit(QtCore.SIGNAL('bar(int)'), percent)
     def setbox(self,title):
         self.emit(QtCore.SIGNAL('setbox(QString)'), title)
