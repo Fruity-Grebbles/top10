@@ -4,7 +4,7 @@ import os
 
 urllib._urlopener = openurl.opener()
 
-search = [mp3skull,pleer,emp3world]
+search = [pleer,emp3world]
 
 def download(url,logfunc,outfile):
 	print url
