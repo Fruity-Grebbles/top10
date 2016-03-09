@@ -1,2 +1,2 @@
 # top10
-A music scraper, downloader, and verifyer by artist
+A music scraper and downloader by artist
