@@ -1,10 +1,10 @@
-import mp3skull,pleer,emp3world
+import mp3skull,pleer,emp3world,mp3clan,mp3jack
 import openurl,urllib
 import os
 
 urllib._urlopener = openurl.opener()
 
-search = [mp3skull,pleer,emp3world]
+search = [mp3skull,pleer,emp3world,mp3clan,mp3jack]
 
 def download(url,logfunc,outfile):
 	print url
