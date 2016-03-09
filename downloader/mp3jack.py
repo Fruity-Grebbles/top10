@@ -28,6 +28,6 @@ def iriToUri(iri):
     )
 
 def search(query):
-	query= re.sub(r"\s+", '_', query)
+    query= re.sub(r"\s+", '_', query)
     return getmp3s("http://www.mp3jack.in/?q="+query)
     
