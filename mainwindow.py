@@ -83,6 +83,7 @@ class Main(QtGui.QMainWindow):
         
 QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_X11InitThreads)
 app = QtGui.QApplication(sys.argv)
+app.setStyle('cleanlooks')
 myWidget = Main()
 myWidget.setWindowTitle("Top 10")
 myWidget.show()
