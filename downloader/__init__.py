@@ -1,4 +1,4 @@
-import mp3skull,pleer,emp3world,mp3clan,mp3jack
+import pleer,emp3world,mp3clan,mp3jack
 import openurl,urllib
 import os
 
